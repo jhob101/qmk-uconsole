@@ -28,7 +28,12 @@ Perfect for verifying your firmware installation and familiarizing yourself with
 
 ## 🎹 Special Key Behaviors
 
+> [!IMPORTANT]
+> **Keyboard Locale / OS Layout:** This firmware expects the host operating system's keyboard layout to be set to **US English (ANSI)**. If your OS is configured with a different layout, some key outputs—specifically special characters and tap-hold keys—might not display correctly or map to different symbols.
+
 * **Remapped A/B/X/Y in keyboard mode:**
+
+Game mode can be activited & toggled by `Fn`+`G`. Gamepad function is mapped to the following table:
 
 | Key    | Gamepad mode    | Keyboard mode
 |--------|-----------------|--------------
@@ -54,6 +59,11 @@ Perfect for verifying your firmware installation and familiarizing yourself with
       - Modifier and Fn combinations bypass tap-hold, so shortcuts like `Ctrl+A`, `Alt+Tab`, and `Shift+1` behave normally
       - *Note:* In the `clockworkpi_uconsole_no_tap_hold.bin` build, the tap-hold feature is completely compiled out, so `Fn+T+H` does nothing and keys always behave normally.
     * **Note:** Game keys (X, Y, A, B, Select, Start) and direction keys (Up, Down, Left, Right) do NOT have tap-hold behavior to preserve their functionality for gaming
+
+* **D-Pad / Directional Keys:** The physical directional keys change functions based on the active mode:
+    * **Keyboard Mode (Layer 0):** Acts as standard arrow keys (`Up`, `Down`, `Left`, `Right`).
+   * **Mouse Cursor Emulation:** Also in keyboard mode, holding **Gamepad Button Y** or **Gamepad Button B** turns the D-pad into mouse cursor movement, quick alternative to trackball.
+    * **Gamepad Mode (Layer 2, toggled via `Fn+G`):** Acts as virtual joystick axes (X and Y axes) for gaming.
 
 * **Trackball Scrolling:** Hold the **Select** key and move the trackball to scroll.
     * Move Up/Down for Vertical Scroll
