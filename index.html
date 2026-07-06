@@ -565,6 +565,8 @@
             ArrowRight: false
         };
         let trustStandardCapsLockApi = true; // Standard API reliability flag
+        let keyLastPressedTimes = {};
+        let keyActiveTimeouts = {};
 
         // Helper to sync Caps Lock state from any event
         function checkCapsLockState(e) {
@@ -862,6 +864,27 @@
 
             // Sync Caps Lock state
             checkCapsLockState(e);
+
+            if (isActive) {
+                keyLastPressedTimes[code] = Date.now();
+                if (keyActiveTimeouts[code]) {
+                    clearTimeout(keyActiveTimeouts[code]);
+                    delete keyActiveTimeouts[code];
+                }
+            } else {
+                const elapsed = Date.now() - (keyLastPressedTimes[code] || 0);
+                const minDuration = 100; // minimum duration in ms
+                if (elapsed < minDuration) {
+                    if (keyActiveTimeouts[code]) {
+                        clearTimeout(keyActiveTimeouts[code]);
+                    }
+                    keyActiveTimeouts[code] = setTimeout(() => {
+                        highlightKey(e, false);
+                        delete keyActiveTimeouts[code];
+                    }, minDuration - elapsed);
+                    return;
+                }
+            }
 
             // Map of shift characters to their base key codes
             const shiftCharMap = {
