@@ -555,6 +555,7 @@
         let cursorMoveTimeout;
         let scrollTimeout;
         let shiftPressed = false;
+        let shiftPressedTime = 0;
         let capsLockActive = false;
         let gamepadIndex = null;
         let gamepadButtonStates = {};
@@ -940,6 +941,9 @@
             // Track shift key state, but only activate shift button if pressed alone (not for special chars)
             if (code === 'ShiftLeft' || code === 'ShiftRight') {
                 shiftPressed = isActive;
+                if (isActive) {
+                    shiftPressedTime = Date.now();
+                }
                 // Don't return here, let it continue to normal key highlighting
                 // This allows shift to be highlighted when pressed by itself
             }
@@ -984,7 +988,8 @@
 
             // Check if this is a joystick button mapped to keyboard
             const joystickButton = joystickKeyMapping[code];
-            if (joystickButton && e.shiftKey) {
+            const isPhysicalShift = shiftPressed && (Date.now() - shiftPressedTime > 30);
+            if (joystickButton && e.shiftKey && isPhysicalShift) {
                 // Shift+X/Y/A/B triggers joystick button
                 keys.forEach(el => {
                     const dataKey = el.getAttribute('data-key');
