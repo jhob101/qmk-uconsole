@@ -44,36 +44,44 @@ Game mode can be activited & toggled by `Fn`+`G`. Gamepad function is mapped to 
 | Select | `JS_4` (Select) | Select  (`KC_SELECT`)
 | Start  | `JS_5` (Start)  | Super   (`KC_LEFT_GUI`)
 
-* **Tap-Hold Keys (Letters, Numbers & Special Characters):** Most alphabetic keys, numbers, and special character keys support tap-hold functionality:
-    * **Tap (< 200ms)** — Sends the lowercase letter or base character (e.g., `a`, `1`, `-`)
-    * **Hold (≥ 200ms)** — Sends the uppercase letter or shifted symbol (e.g., `A`, `!`, `_`)
-    * **Supported keys:**
-      - **Letters:** A-Z (tap = lowercase, hold = uppercase)
-      - **Numbers:** 0-9 (tap = number, hold = shifted symbol like `!`, `@`, `#`, etc.)
-      - **Special Characters:** `` ` `` ↔ `~`, `[` ↔ `{`, `]` ↔ `}`, `-` ↔ `_`, `=` ↔ `+`, `/` ↔ `?`, `\` ↔ `|`, `;` ↔ `:`, `'` ↔ `"`, `,` ↔ `<`, `.` ↔ `>`
-    * **Quick Duplication:** Double-tap quickly to produce two lowercase characters (e.g., tapping `A` twice = `aa`)
-    * **Toggle On/Off:** Press **Fn+T+H** to toggle tap-hold functionality on or off (default: **disabled**)
-      - The setting persists across power cycles via EEPROM storage
-      - When disabled: keys behave normally (single key press/release)
-      - When enabled: timing-based tap-hold behavior applies
-      - Modifier and Fn combinations bypass tap-hold, so shortcuts like `Ctrl+A`, `Alt+Tab`, and `Shift+1` behave normally
-      - *Note:* In the `clockworkpi_uconsole_no_tap_hold.bin` build, the tap-hold feature is completely compiled out, so `Fn+T+H` does nothing and keys always behave normally.
-    * **Note:** Game keys (X, Y, A, B, Select, Start) and direction keys (Up, Down, Left, Right) do NOT have tap-hold behavior to preserve their functionality for gaming
+### Tap-Hold Keys
+Most alphabetic keys, numbers, and special character keys support tap-hold functionality. Modifier and Fn combinations bypass tap-hold (e.g. `Ctrl+A` behaves normally). 
+*Note: Game keys and the D-pad do not have tap-hold behavior to preserve their responsiveness.*
 
-* **D-Pad / Directional Keys:** The physical directional keys change functions based on the active mode:
-    * **Keyboard Mode (Layer 0):** Acts as standard arrow keys (`Up`, `Down`, `Left`, `Right`).
-   * **Mouse Cursor Emulation:** Also in keyboard mode, holding **Gamepad Button Y** or **Gamepad Button B** turns the D-pad into mouse cursor movement, quick alternative to trackball.
-    * **Gamepad Mode (Layer 2, toggled via `Fn+G`):** Acts as virtual joystick axes (X and Y axes) for gaming.
+| Key Category | Tap (< 200ms) | Hold (≥ 200ms) | Examples |
+|---|---|---|---|
+| **Letters** | Lowercase | Uppercase | `a` ↔ `A` |
+| **Numbers** | Number | Shifted Symbol | `1` ↔ `!` |
+| **Special Chars**| Base Character | Shifted Symbol | `` ` `` ↔ `~`, `[` ↔ `{`, `-` ↔ `_` |
 
-* **Trackball Scrolling:** Hold the **Select** key and move the trackball to scroll.
-    * Move Up/Down for Vertical Scroll
-    * Move Left/Right for Horizontal Scroll
-* **DFU (Bootloader) Mode:** Press `Left Alt` + `Right Alt` + `Start` simultaneously to enter DFU mode.
+### D-Pad & Directional Keys
+The physical directional keys change functions based on the active mode:
 
-* **Precision Cursor Mode:** Hold the **Select** key and press the trackball **middle** button to toggle between
-   - **Normal Mode** — regular cursor movement
-   - **Precision Mode** — reduced cursor movement for fine control
-This provides a quick two-state toggle for precise pointer adjustments.
+| Active Mode | Modifier Held | D-Pad Function |
+|---|---|---|
+| **Keyboard** (Layer 0) | None | Standard arrow keys (`Up`, `Down`, `Left`, `Right`) |
+| **Keyboard** (Layer 0) | `Y` or `B` Button | Mouse cursor movement (quick trackball alternative) |
+| **Gamepad** (Layer 2) | None | Virtual joystick axes (X and Y axes) |
+
+### Trackball & Cursor Settings
+Advanced trackball features are accessed by holding the **Select** key:
+
+| Action | Function | Description |
+|---|---|---|
+| **Hold `Select` + Move Trackball** | Trackball Scrolling | Move Up/Down for vertical, Left/Right for horizontal scroll |
+| **Hold `Select` + Click Trackball** | Precision Cursor Mode | Toggles between normal and precision (reduced) cursor speeds |
+
+### System & Feature Toggles
+Use the following shortcuts to toggle hardware modes and special features:
+
+| Shortcut / Key Combo | Function | Description |
+|---|---|---|
+| **`Fn` + `G`** | Gamepad Mode | Toggles Layer 2 (maps A/B/X/Y and D-Pad for gaming) |
+| **`Fn` + `T` + `H`** | Tap-Hold Toggle | Turns tap-hold on/off (Default: **disabled**, saves to EEPROM) * |
+| **Double-Tap Letter**| Quick Duplication| Quickly produces two lowercase characters (e.g. `aa`) |
+| **`LAlt`+`RAlt`+`Start`**| DFU Mode | Enters bootloader mode for firmware flashing |
+
+*\* Note: In the `clockworkpi_uconsole_no_tap_hold.bin` build, the tap-hold feature is completely compiled out, so `Fn+T+H` does nothing.*
 
 ## 🎯 Installation Guide
 
