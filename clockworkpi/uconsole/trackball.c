@@ -37,14 +37,16 @@ static int16_t wheel_buffer[AXIS_NUM] = {0};
 // speeds
 static float rateToVelocityCurve(float input, float acceleration_scale) {
   float abs_input = fabsf(input);
-  if (abs_input < 0.05f)
-    return 0; // Lower deadzone for finer control
 
-  float x = abs_input - 0.05f;
-  float accel = ((x * x) / 60.0f) * acceleration_scale;
-  float linear = x / 50.0f;
+  // Smoothly ramp up the base offset from 0 to 0.12 using a rational function,
+  // avoiding the hard deadzone and sudden jump of the previous curve.
+  // This provides natural, immediate response to slow, fine movements.
+  float base = 0.12f * (abs_input / (abs_input + 0.04f));
 
-  return 0.12f + linear + accel;
+  float accel = ((abs_input * abs_input) / 60.0f) * acceleration_scale;
+  float linear = abs_input / 50.0f;
+
+  return base + linear + accel;
 }
 
 static void trackball_move(uint8_t axis, int8_t direction) {
