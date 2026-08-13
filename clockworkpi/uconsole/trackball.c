@@ -147,8 +147,15 @@ report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report) {
   chSysLock();
 
   const uint16_t now = timer_read();
-  const uint16_t delta = TIMER_DIFF_16(now, last_report);
+  uint16_t delta = TIMER_DIFF_16(now, last_report);
   last_report = now;
+
+  // Prevent massive cursor jumps when waking from an idle state.
+  // If the trackball wasn't polled for a long time, delta will be huge.
+  // Applying a huge delta to the instantaneous wake-up speed causes overshoot.
+  if (delta > 50) {
+      delta = 50;
+  }
 
   const uint8_t mode = select_button_pressed ? MODE_WHEEL : MODE_MOUSE;
   if (last_mode != mode) {
